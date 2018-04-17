@@ -1,6 +1,5 @@
-package com.study.netty.sticky.server;
+package com.study.netty.sticky.linebase.server;
 
-import com.study.nio.basic.server.NettyTimeServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -9,11 +8,13 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.string.StringDecoder;
 
 /**
  * Created by piguanghua on 4/17/18.
  */
-public class NettyStickyTimeServer {
+public class LineBasedFrameDecoderTimeServer {
     public void bind(int port)throws Exception{
         /* 配置服务端的NIO线程组 */
         // NioEventLoopGroup类 是个线程组，包含一组NIO线程，用于网络事件的处理
@@ -24,17 +25,17 @@ public class NettyStickyTimeServer {
         EventLoopGroup WorkerGroup = new NioEventLoopGroup();
 
         try {
-            // ServerBootstrap 类，是启动NIO服务器的辅助启动类,降低服务端开发难度
+            // ServerBootstrap 类，是启动NIO服务器的辅助启动类
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup,WorkerGroup)
-                    .channel(NioServerSocketChannel.class)   //将Channel设置为ServerChannel
-                    .option(ChannelOption.SO_BACKLOG,1024) //设置TCP参数？
+                    .channel(NioServerSocketChannel.class)
+                    .option(ChannelOption.SO_BACKLOG,1024)
                     .childHandler(new ChildChannelHandler());
 
-            // 绑定端口,同步等待成功  作用等待绑定完成
+            // 绑定端口,同步等待成功
             ChannelFuture f= b.bind(port).sync();
 
-            // 阻塞式 等待服务端监听端口关闭
+            // 等待服务端监听端口关闭
             f.channel().closeFuture().sync();
         }finally {
             // 释放线程池资源
@@ -43,11 +44,13 @@ public class NettyStickyTimeServer {
         }
     }
 
-    //类似于Reactor模式中Handler 处理网络I/O事件 添加责任链
     private class ChildChannelHandler extends ChannelInitializer<SocketChannel>{
         @Override
         protected  void initChannel(SocketChannel arg0)throws Exception{
-            arg0.pipeline().addLast(new NettyStickyTimeServerHandler());
+            // 增加 LineBasedFrameDecoder 和StringDecoder编码器
+            arg0.pipeline().addLast(new LineBasedFrameDecoder(1024));
+            arg0.pipeline().addLast(new StringDecoder());
+            arg0.pipeline().addLast(new LineBasedFrameDecoderTimeServerHandler());
         }
     }
 
@@ -59,7 +62,6 @@ public class NettyStickyTimeServer {
             }
             catch (NumberFormatException ex){}
         }
-        new NettyStickyTimeServer().bind(port);
+        new LineBasedFrameDecoderTimeServer().bind(port);
     }
-
 }

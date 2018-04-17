@@ -1,4 +1,4 @@
-package com.study.netty.sticky.client;
+package com.study.netty.sticky.bug.client;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

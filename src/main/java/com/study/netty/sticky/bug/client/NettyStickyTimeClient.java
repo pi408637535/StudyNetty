@@ -1,6 +1,5 @@
-package com.study.netty.sticky.client;
+package com.study.netty.sticky.bug.client;
 
-import com.study.nio.basic.client.NettyTimeClientHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
