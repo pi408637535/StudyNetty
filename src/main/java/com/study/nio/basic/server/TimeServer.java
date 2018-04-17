@@ -1,4 +1,6 @@
-package main.java.com.study.nio.basic.server;
+package com.study.nio.basic.server;
+
+import com.study.nio.basic.server.MultiplexerTimeServer;
 
 import java.io.IOException;
 

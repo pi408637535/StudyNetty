@@ -1,4 +1,4 @@
-package main.java.com.study.aio.basic.server;
+package com.study.aio.basic.server;
 
 /**
  * Created by piguanghua on 4/17/18.

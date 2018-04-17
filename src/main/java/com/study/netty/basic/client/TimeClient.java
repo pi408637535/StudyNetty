@@ -1,4 +1,4 @@
-package main.java.com.study.netty.basic.client;
+package com.study.netty.basic.client;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;

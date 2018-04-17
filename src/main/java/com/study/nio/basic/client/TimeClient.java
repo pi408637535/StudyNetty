@@ -1,4 +1,4 @@
-package main.java.com.study.nio.basic.client;
+package com.study.nio.basic.client;
 
 /**
  * Created by piguanghua on 4/17/18.

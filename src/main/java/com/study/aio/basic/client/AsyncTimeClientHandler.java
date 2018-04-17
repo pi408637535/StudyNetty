@@ -1,4 +1,4 @@
-package main.java.com.study.aio.basic.client;
+package com.study.aio.basic.client;
 
 /**
  * Created by piguanghua on 4/17/18.

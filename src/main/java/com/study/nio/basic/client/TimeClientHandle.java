@@ -1,4 +1,4 @@
-package main.java.com.study.nio.basic.client;
+package com.study.nio.basic.client;
 
 import com.sun.scenario.effect.impl.prism.PrImage;
 
