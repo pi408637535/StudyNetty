@@ -40,6 +40,7 @@ public class LoginAuthReqHandler extends ChannelHandlerAdapter {
      * next {@link ChannelHandler} in the {@link ChannelPipeline}.
      * <p/>
      * Sub-classes may override this method to change behavior.
+     * TCP三次毕后，客户端向Server发起Netty握手
      */
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -69,8 +70,10 @@ public class LoginAuthReqHandler extends ChannelHandlerAdapter {
                 LOG.info("Login is ok : " + message);
                 ctx.fireChannelRead(msg);
             }
-        } else
+        } else{
+            //todo 这个是干嘛的
             ctx.fireChannelRead(msg);
+        }
     }
 
     private NettyMessage buildLoginReq() {

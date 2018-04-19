@@ -30,6 +30,7 @@ import org.apache.commons.logging.LogFactory;
  * @author Lilinfeng
  * @version 1.0
  * @date 2014年3月15日
+ *
  */
 public class HeartBeatReqHandler extends ChannelHandlerAdapter {
 
@@ -45,6 +46,7 @@ public class HeartBeatReqHandler extends ChannelHandlerAdapter {
         if (message.getHeader() != null
                 && message.getHeader().getType() == MessageType.LOGIN_RESP
                 .value()) {
+            //todo heartBeat作用？
             heartBeat = ctx.executor().scheduleAtFixedRate(
                     new HeartBeatTask(ctx), 0, 5000,
                     TimeUnit.MILLISECONDS);
@@ -60,6 +62,7 @@ public class HeartBeatReqHandler extends ChannelHandlerAdapter {
     private class HeartBeatTask implements Runnable {
         private final ChannelHandlerContext ctx;
 
+        //Todo ChannelHandlerContext作用
         public HeartBeatTask(final ChannelHandlerContext ctx) {
             this.ctx = ctx;
         }

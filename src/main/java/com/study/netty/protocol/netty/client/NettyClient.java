@@ -39,6 +39,13 @@ import org.apache.commons.logging.LogFactory;
  * @author Lilinfeng
  * @version 1.0
  * @date 2014年3月15日
+ *
+ *  NettyClient分析
+ *  1.Tcp三次握手完毕，向Server发Netty握手协议
+ *  2.如果握手完毕 等待 握手应答消息或者心跳协议，如果是握手应答消息，进行定时心跳的发送
+ *
+ *  如果发现链路关系，Client需要清除链接资源，然后发起重连
+ *
  */
 public class NettyClient {
 

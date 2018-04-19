@@ -38,6 +38,13 @@ import org.apache.commons.logging.LogFactory;
  * @author Lilinfeng
  * @version 1.0
  * @date 2014年3月15日
+ *  逻辑分析：
+ *  NettyServer,接受信息接受 decode-> encode -> ReadTimeoutHandler -> 登录检测 -> 心跳检测
+ *  登录检测 先检验 是否是握手协议，如果是就先 握手协议校验 -> IP白名单检测 ->成功后进行登录重复保护 ->发握手应答
+ *                如果不是握手协议，进行下传递，查看是否是心跳协议如果是心跳进行应答且返回心跳
+ *
+ *
+ *
  */
 public class NettyServer {
 
@@ -59,7 +66,7 @@ public class NettyServer {
                                 new NettyMessageDecoder(1024 * 1024, 4, 4));
                         ch.pipeline().addLast(new NettyMessageEncoder());
                         ch.pipeline().addLast("readTimeoutHandler",
-                                new ReadTimeoutHandler(50));
+                                new ReadTimeoutHandler(10));
                         ch.pipeline().addLast(new LoginAuthRespHandler());
                         ch.pipeline().addLast("HeartBeatHandler",
                                 new HeartBeatRespHandler());
