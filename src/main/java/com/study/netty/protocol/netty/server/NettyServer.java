@@ -18,6 +18,7 @@ package com.study.netty.protocol.netty.server;
 import com.study.netty.protocol.netty.NettyConstant;
 import com.study.netty.protocol.netty.codec.NettyMessageDecoder;
 import com.study.netty.protocol.netty.codec.NettyMessageEncoder;
+import com.study.netty.protocol.netty.codec.NettyServerMessageEncoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -64,9 +65,9 @@ public class NettyServer {
                             throws IOException {
                         ch.pipeline().addLast(
                                 new NettyMessageDecoder(1024 * 1024, 4, 4));
-                        ch.pipeline().addLast(new NettyMessageEncoder());
+                        ch.pipeline().addLast(new NettyServerMessageEncoder());
                         ch.pipeline().addLast("readTimeoutHandler",
-                                new ReadTimeoutHandler(10));
+                                new ReadTimeoutHandler(50));
                         ch.pipeline().addLast(new LoginAuthRespHandler());
                         ch.pipeline().addLast("HeartBeatHandler",
                                 new HeartBeatRespHandler());
